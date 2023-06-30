@@ -38,9 +38,9 @@
               </div>
 
               <div>
-                <a id="signInBtn" class="" href="./votingPage.html">
+                <a onclick="submit()" id="signInBtn" class="">
                   <div
-                    class="w-full bg-green-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    class="w-full bg-green-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 btn dark:focus:ring-primary-800"
                   >
                     Sign In
                   </div>
@@ -52,5 +52,25 @@
       </div>
     </section>
     <script src="./matric.js"></script>
+    <script>
+      let submit = () => {
+        let btn = document.querySelector(".btn");
+        let matricId = document.querySelector("#matric").value;
+        btn.innerHTML = "Loading..";
+        console.log(matricId);
+        fetch("http://localhost:8080/api/v1/students/login", {
+          method: "POST",
+          body: {
+            matricId,
+          },
+        }).then((res) => {
+          let data = res.json();
+          window.alert(data.msg);
+        });
+        setTimeout(() => {
+          // window.location.href = "./votingPage.html";
+        }, 2000);
+      };
+    </script>
   </body>
 </html>
