@@ -53,20 +53,26 @@
     </section>
     <script src="./matric.js"></script>
     <script>
-      let submit = () => {
+      let submit = async () => {
         let btn = document.querySelector(".btn");
         let matricId = document.querySelector("#matric").value;
         btn.innerHTML = "Loading..";
+        matricId = JSON.stringify({ matricId: matricId });
         console.log(matricId);
-        fetch("http://localhost:8080/api/v1/students/login", {
+        await fetch("http://localhost:8080/api/v1/students/login", {
           method: "POST",
           body: {
             matricId,
           },
-        }).then((res) => {
-          let data = res.json();
-          window.alert(data.msg);
-        });
+        })
+          .then(async (res) => {
+            let data = await res.json();
+            window.alert(data.msg);
+            btn.innerHTML = "Log In";
+          })
+          .catch(async (res) => {
+            btn.innerHTML = "Log In";
+          });
         setTimeout(() => {
           // window.location.href = "./votingPage.html";
         }, 2000);
